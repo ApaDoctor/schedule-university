@@ -36,12 +36,12 @@ class LESSON_TIME:
     ]
 
     DAY = (
-        ("mon", "Понедельник"),
-        ("tue", "Вторник"),
-        ("wed", "Среда"),
-        ("thu", "Четверг"),
-        ("fri", "Пятница"),
-        ("sat", "Суббота"),
+        ("Понедельник", "Понедельник"),
+        ("Вторник", "Вторник"),
+        ("Среда", "Среда"),
+        ("Четверг", "Четверг"),
+        ("Пятница", "Пятница"),
+        ("Суббота", "Суббота"),
     )
 
     @classmethod
@@ -104,10 +104,10 @@ class StudySubject(models.Model):
         verbose_name_plural = "предметы"
 
     name = models.CharField("Имя", max_length=100)
-    type = models.CharField("Вид", max_length=20, choices=(("lect", "Лекция"), ("pract", "Практика")))
+    type = models.CharField("Вид", max_length=20, choices=(("Лекция", "Лекция"), ("Практика", "Практика")))
 
     def __str__(self):
-        return "{}({})".format(self.name, self.type)
+        return "{} {} ".format(self.name, self.type)
 
 class Lesson(models.Model):
     lesson_number = models.IntegerField(choices=LESSON_TIME.TIME_verbose().items(), verbose_name="Пара")
@@ -117,7 +117,11 @@ class Lesson(models.Model):
     room = models.ForeignKey("LectureRoom", verbose_name="Аудитория")
 
     def verbose_lesson_time(self):
-        return LESSON_TIME.TIME[self.lesson_number]
+        return "1"
+
+
+    def moduled(self):
+        return self.lesson_number % 2
 
 class DaySchedule(models.Model):
     class Meta:
@@ -127,3 +131,7 @@ class DaySchedule(models.Model):
     week = models.CharField(max_length=5, verbose_name="Неделя", choices=(("1", "1"), ("2", "2")))
     day = models.CharField(max_length=20, verbose_name="День", choices=LESSON_TIME.DAY)
     group = models.ForeignKey("StudyGroup", verbose_name="Группа")
+
+
+    def verbose_lesson_time(self):
+        return "1"

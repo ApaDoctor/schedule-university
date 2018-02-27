@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% load  static%}
+
+{% block content %}
+    <ul>
+    {% for day in data %}
+        <li>
+            День: {{ day.day }}
+            Неделя: {{ day.week }}
+            Группа: {{ day.group }}
+            Факультет: {{ day.group.faculty }}
+            <ul>
+                {% for lesson in day.lesson_set.all %}
+                    <li class=" {% if lesson.moduled %}row{% endif %}">
+                        Номер: {{ lesson.lesson_number }}
+                        Предмет: {{ lesson.subject }}
+                        Преподаватель: {{ lesson.professor.name }}
+                        Преподаватель: {{ lesson.subject.type }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+
+</ul>
+{% endblock %}
